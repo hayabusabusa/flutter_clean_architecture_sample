@@ -1,6 +1,8 @@
+import 'package:equatable/equatable.dart';
+
 import './user.dart';
 
-class QiitaItem {
+class QiitaItem extends Equatable {
   final String title;
   final String body;
   final int likes;
@@ -12,6 +14,14 @@ class QiitaItem {
     this.likes,
     this.user
   });
+
+  @override
+  List<Object> get props => [
+    title,
+    body,
+    likes,
+    user,
+  ];
 
   static QiitaItem fromJson(Map<String, dynamic> json) {
     return QiitaItem(
