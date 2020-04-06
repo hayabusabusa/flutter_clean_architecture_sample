@@ -15,8 +15,10 @@ class UserIcon extends StatelessWidget {
       decoration: BoxDecoration(
         border: Border.all(color: Colors.grey[200]),
         borderRadius: BorderRadius.all(Radius.circular(28)),
+        image: DecorationImage(
+          image: NetworkImage(_imageURL),
+        ),
       ),
-      child: Image.network(_imageURL),
     );
   }
 }

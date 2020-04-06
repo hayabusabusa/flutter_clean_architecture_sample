@@ -78,7 +78,7 @@ class ArticleItem extends StatelessWidget {
             // Title
             _buildTitle(),
             // Spacer
-            SizedBox(height: 12),
+            SizedBox(height: 8),
             // Content
             _buildContent(),
             // Stretch Spacer
