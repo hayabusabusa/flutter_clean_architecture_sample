@@ -5,12 +5,17 @@ import 'package:clean_architecture_sample/secret.dart';
 // NOTE: Framework and Driver から Entity への依存は順方向
 import 'package:clean_architecture_sample/entity/entity.dart';
 
-class APIClient {
+abstract class APIClientInterface {
+  Future<List<QiitaItem>> fetchItems();
+}
+
+class APIClient implements APIClientInterface {
   static const String baseURL = 'https://qiita.com/api/v2';
   static const String accessToken = 'Bearer ' + qiitaAccessToken;
 
   final http.Client httpClient = http.Client();
 
+  @override
   Future<List<QiitaItem>> fetchItems() async {
     final url = baseURL + '/items';
     final headers = {
