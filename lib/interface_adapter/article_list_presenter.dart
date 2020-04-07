@@ -8,7 +8,7 @@ abstract class ArticleListPresenterOutput {
   Function(List<QiitaItem>) updateArticles;
 }
 
-// NOTE: View 側に後悔するインターフェース
+// NOTE: View 側に公開するインターフェース
 abstract class ArticleListPresenterInput {
   void onInitState();
 }
