@@ -25,7 +25,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Articles'),
+        title: Text('Qiita', style: TextStyle(color: Colors.green, fontSize: 20, fontWeight: FontWeight.w600),),
         brightness: Brightness.light,
         backgroundColor: Colors.white,
       ),
