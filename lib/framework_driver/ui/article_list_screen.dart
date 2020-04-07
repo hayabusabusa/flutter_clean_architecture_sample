@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 // NOTE: 本当は Interface Adapter の Model とか
 import 'package:clean_architecture_sample/entity/entity.dart';
 import 'package:clean_architecture_sample/framework_driver/ui/widget/widgets.dart';
-
-// NOTE: Test
 import 'package:clean_architecture_sample/interface_adapter/interface_adapter.dart';
 
 class ArticleListScreen extends StatefulWidget implements ArticleListPresenterOutput {

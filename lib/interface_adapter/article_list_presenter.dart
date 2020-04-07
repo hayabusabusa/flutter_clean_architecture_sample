@@ -1,7 +1,6 @@
 // NOTE: TEST
 import 'package:clean_architecture_sample/entity/entity.dart';
 import 'package:clean_architecture_sample/usecase/usecase.dart';
-import 'package:clean_architecture_sample/framework_driver/network/network.dart';
 
 // NOTE: View 側に実装させるインターフェース
 abstract class ArticleListPresenterOutput {
@@ -15,19 +14,18 @@ abstract class ArticleListPresenterInput {
 
 // NOTE: DIP より、上位レイヤーの抽象( UseCase の Output のインターフェース )をここで実装する
 class ArticleListPresenter implements ArticleListPresenterInput, ArticlesUseCaseOutput {
-  final APIClientInterface _apiClinet = APIClient();
+  final ArticlesUseCaseInput _useCase;
   final ArticleListPresenterOutput _output;
 
   ArticleListPresenter(
     this._output,
-  ): assert(_output != null); 
+    this._useCase,
+  ): assert(_output != null,
+            _useCase != null); 
 
   @override
   void onInitState() {
-    _apiClinet.fetchItems()
-      .then((value) {
-        _output.updateArticles(value);
-      });
+    _useCase.fetchArticles();
   }
 
   // MARK: UseCaes Output

@@ -11,7 +11,7 @@ void main() {
 }
 
 class App extends StatelessWidget {
-  AppBuilder _builder;
+  final AppBuilder _builder;
 
   App(
     this._builder
