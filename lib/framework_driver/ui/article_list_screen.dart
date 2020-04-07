@@ -5,20 +5,34 @@ import 'package:clean_architecture_sample/entity/entity.dart';
 import 'package:clean_architecture_sample/framework_driver/ui/widget/widgets.dart';
 
 // NOTE: Test
-import 'package:clean_architecture_sample/framework_driver/network/network.dart';
+import 'package:clean_architecture_sample/interface_adapter/interface_adapter.dart';
 
-class ArticleListScreen extends StatefulWidget {
-  final APIClient apiClient = APIClient();
+class ArticleListScreen extends StatefulWidget implements ArticleListPresenterOutput {
+  ArticleListPresenterInput _presenter;
+
+  void inject(ArticleListPresenterInput presenter) {
+    _presenter = presenter;
+  }
 
   @override
   State<StatefulWidget> createState() => _ArticleListScreenState();
+
+  @override
+  Function(List<QiitaItem>) updateArticles;
 }
 
 class _ArticleListScreenState extends State<ArticleListScreen> {
+  List<QiitaItem> _ariticles = [];
 
   @override
   void initState() {
     super.initState();
+    widget.updateArticles = (articles) {
+      setState(() {
+        _ariticles = articles;
+      });
+    };
+    widget._presenter.onInitState();
   }
 
   @override
@@ -29,20 +43,9 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
         brightness: Brightness.light,
         backgroundColor: Colors.white,
       ),
-      body: FutureBuilder<List<QiitaItem>>(
-        future: widget.apiClient.fetchItems(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return ListView.builder(
-              itemCount: snapshot.data.length,
-              itemBuilder: (context, index) => ArticleItem(snapshot.data[index]),
-            );
-          } else {
-            return Center(
-              child: Text('Empty.'),
-            );
-          }
-        },
+      body: ListView.builder(
+        itemCount: _ariticles.length,
+        itemBuilder: (context, index) => ArticleItem(_ariticles[index]),
       ),
     );
   }

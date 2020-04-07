@@ -15,7 +15,7 @@ class ArticleItem extends StatelessWidget {
     return Text(
       _qiitaItem.title,
       maxLines: 1,
-      softWrap: true,
+      overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontSize: 18,
         fontWeight: FontWeight.w500
