@@ -22,6 +22,7 @@ class ArticleListPresenter implements ArticleListPresenterInput, ArticlesUseCase
     this._output,
   ): assert(_output != null); 
 
+  @override
   void onInitState() {
     _apiClinet.fetchItems()
       .then((value) {
@@ -29,4 +30,15 @@ class ArticleListPresenter implements ArticleListPresenterInput, ArticlesUseCase
       });
   }
 
+  // MARK: UseCaes Output
+
+  @override
+  void useCaseDidUpdateArticles(List<QiitaItem> articles) {
+    _output.updateArticles(articles);
+  }
+
+  @override
+  void useCaseDidRecieveError(Error error) {
+    // TODO: Show error
+  }
 }
