@@ -10,7 +10,7 @@ class AppBuilder {
     this._apiClient,
   ): assert(_apiClient != null);
 
-  static ArticleListScreen createArticleListScreen() {
+  ArticleListScreen createArticleListScreen() {
     final view = ArticleListScreen();
     //final useCase = ArticlesUseCase();
     final presenter = ArticleListPresenter(view);
