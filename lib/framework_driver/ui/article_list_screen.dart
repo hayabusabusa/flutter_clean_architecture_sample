@@ -43,7 +43,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
       ),
       body: ListView.builder(
         itemCount: _ariticles.length,
-        itemBuilder: (context, index) => ArticleItem(_ariticles[index]),
+        itemBuilder: (context, index) => ArticleItem(_ariticles[index], (item) { print(item); }),
       ),
     );
   }

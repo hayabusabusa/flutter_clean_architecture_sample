@@ -6,10 +6,12 @@ import 'package:clean_architecture_sample/entity/entity.dart';
 
 class ArticleItem extends StatelessWidget {
   final QiitaItem _qiitaItem;
+  final Function(QiitaItem) _onTap;
 
   ArticleItem(
     this._qiitaItem,
-  );
+    this._onTap,
+  ): assert(_qiitaItem != null);
 
   Widget _buildTitle() {
     return Text(
@@ -18,7 +20,7 @@ class ArticleItem extends StatelessWidget {
       overflow: TextOverflow.ellipsis,
       style: TextStyle(
         fontSize: 18,
-        fontWeight: FontWeight.w500
+        fontWeight: FontWeight.w600
       ),
     );
   }
@@ -57,21 +59,9 @@ class ArticleItem extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
-      child: Container(
+      child: RippleCard(
+        onTap: () {_onTap(_qiitaItem);},
         height: 140,
-        padding: const EdgeInsets.all(12),
-        decoration: BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.all(Radius.circular(8)),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.black.withOpacity(0.16),
-              spreadRadius: 2,
-              blurRadius: 4,
-              offset: Offset(4, 4)
-            )
-          ]
-        ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
