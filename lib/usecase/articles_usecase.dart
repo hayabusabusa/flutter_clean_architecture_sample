@@ -3,6 +3,7 @@ import 'package:clean_architecture_sample/entity/entity.dart';
 // NOTE: 下位の Presenter に実装させるインターフェース
 abstract class ArticlesUseCaseOutput {
   void useCaseDidUpdateArticles(List<QiitaItem> articles);
+  void useCaseIsLoading(bool isLoading);
   void useCaseDidRecieveError(Error error);
 }
 
@@ -20,7 +21,7 @@ class ArticlesUseCase implements ArticlesUseCaseInput {
   final ArticlesRepositoryInterface _articlesRepository;
 
   // NOTE: Presenter を後から指定する.
-  // UseCase は Presenter が生成されていなくてもオブジェクト化できるようにするため.
+  // UseCase は Presenter が生成されていなくても(下位に依存しない)オブジェクト化できるようにするため.
   ArticlesUseCaseOutput output;
 
   ArticlesUseCase(
@@ -29,12 +30,15 @@ class ArticlesUseCase implements ArticlesUseCaseInput {
 
   @override
   void fetchArticles() {
+    output?.useCaseIsLoading(true);
     _articlesRepository.fetchArticles()
       .then((value) {
-        output.useCaseDidUpdateArticles(value);
+        output?.useCaseIsLoading(false);
+        output?.useCaseDidUpdateArticles(value);
       })
       .catchError((error) {
-        output.useCaseDidRecieveError(error);
+        output?.useCaseIsLoading(false);
+        output?.useCaseDidRecieveError(error);
       });
   }
 }

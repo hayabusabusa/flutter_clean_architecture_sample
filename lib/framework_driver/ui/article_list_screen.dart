@@ -17,17 +17,28 @@ class ArticleListScreen extends StatefulWidget implements ArticleListPresenterOu
 
   @override
   Function(List<QiitaItem>) updateArticles;
+
+  @override
+  Function(bool) updateIsLoading;
 }
 
 class _ArticleListScreenState extends State<ArticleListScreen> {
   List<QiitaItem> _ariticles = [];
+  bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    // NOTE: on update articles.
     widget.updateArticles = (articles) {
       setState(() {
         _ariticles = articles;
+      });
+    };
+    // NOTE: on update is loading.
+    widget.updateIsLoading = (isLoading) {
+      setState(() {
+        _isLoading = isLoading;
       });
     };
     widget._presenter.onInitState();
@@ -41,10 +52,18 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
         brightness: Brightness.light,
         backgroundColor: Colors.white,
       ),
-      body: ListView.builder(
-        itemCount: _ariticles.length,
-        itemBuilder: (context, index) => ArticleItem(_ariticles[index], (item) { print(item); }),
-      ),
+      body: _isLoading 
+        // NOTE: Show indicator
+        ? Center(
+          child: CircularProgressIndicator(
+            valueColor: AlwaysStoppedAnimation<Color>(Colors.green[300]),
+          )
+        )
+        // NOTE: Show article list
+        : ListView.builder(
+          itemCount: _ariticles.length,
+          itemBuilder: (context, index) => ArticleItem(_ariticles[index], (item) { print(item); }),
+        ),
     );
   }
 }

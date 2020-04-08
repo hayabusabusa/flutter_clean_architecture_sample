@@ -5,6 +5,7 @@ import 'package:clean_architecture_sample/usecase/usecase.dart';
 // NOTE: View 側に実装させるインターフェース
 abstract class ArticleListPresenterOutput {
   Function(List<QiitaItem>) updateArticles;
+  Function(bool) updateIsLoading;
 }
 
 // NOTE: View 側に公開するインターフェース
@@ -33,6 +34,11 @@ class ArticleListPresenter implements ArticleListPresenterInput, ArticlesUseCase
   @override
   void useCaseDidUpdateArticles(List<QiitaItem> articles) {
     _output.updateArticles(articles);
+  }
+
+  @override
+  void useCaseIsLoading(bool isLoading) {
+    _output.updateIsLoading(isLoading);
   }
 
   @override
