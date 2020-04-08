@@ -20,6 +20,9 @@ class ArticleListScreen extends StatefulWidget implements ArticleListPresenterOu
 
   @override
   Function(bool) updateIsLoading;
+
+  @override
+  Function(String) recieveError;
 }
 
 class _ArticleListScreenState extends State<ArticleListScreen> {
@@ -40,6 +43,14 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
       setState(() {
         _isLoading = isLoading;
       });
+    };
+    // NOTE: on recieve error
+    widget.recieveError = (message) {
+      Scaffold.of(context).showSnackBar(
+        SnackBar(
+          content: Text(message)
+        )
+      );
     };
     widget._presenter.onInitState();
   }
@@ -62,7 +73,10 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
         // NOTE: Show article list
         : ListView.builder(
           itemCount: _ariticles.length,
-          itemBuilder: (context, index) => ArticleItem(_ariticles[index], (item) { print(item); }),
+          itemBuilder: (context, index) => ArticleItem(
+            _ariticles[index],
+           (item) { widget._presenter.onTapListItem(item); }
+          ),
         ),
     );
   }

@@ -6,11 +6,13 @@ import 'package:clean_architecture_sample/usecase/usecase.dart';
 abstract class ArticleListPresenterOutput {
   Function(List<QiitaItem>) updateArticles;
   Function(bool) updateIsLoading;
+  Function(String) recieveError;
 }
 
 // NOTE: View 側に公開するインターフェース
 abstract class ArticleListPresenterInput {
   void onInitState();
+  void onTapListItem(QiitaItem item);
 }
 
 // NOTE: DIP より、上位レイヤーの抽象( UseCase の Output のインターフェース )をここで実装する
@@ -27,6 +29,11 @@ class ArticleListPresenter implements ArticleListPresenterInput, ArticlesUseCase
   @override
   void onInitState() {
     _useCase.fetchArticles();
+  }
+
+  @override
+  void onTapListItem(QiitaItem item) {
+    _useCase.openURL(item.url);
   }
 
   // MARK: UseCaes Output

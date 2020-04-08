@@ -12,8 +12,12 @@ class AppBuilder {
 
   ArticleListScreen createArticleListScreen() {
     final view = ArticleListScreen();
-    final repository = ArticlesRepository(_apiClient);
-    final useCase = ArticlesUseCase(repository);
+    final articlesRepository = ArticlesRepository(_apiClient);
+    final urlLaunchRepository = URLLaunchRepository();
+    final useCase = ArticlesUseCase(
+      articlesRepository: articlesRepository,
+      urlLaunchRepository: urlLaunchRepository
+    );
     final presenter = ArticleListPresenter(view, useCase);
 
     // NOTE: UseCase の Output に Presenter を指定

@@ -1,8 +1,6 @@
 import 'package:url_launcher/url_launcher.dart';
 
-abstract class URLLaunchRepositoryInterface {
-  Future<void> launchInWebView(String url);
-}
+import 'package:clean_architecture_sample/usecase/usecase.dart';
 
 class URLLaunchRepository implements URLLaunchRepositoryInterface {
   @override
