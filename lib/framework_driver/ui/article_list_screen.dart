@@ -45,12 +45,8 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
       });
     };
     // NOTE: on recieve error
-    widget.recieveError = (message) {
-      Scaffold.of(context).showSnackBar(
-        SnackBar(
-          content: Text(message)
-        )
-      );
+    widget.recieveError = (errorMessage) {
+      print(errorMessage);
     };
     widget._presenter.onInitState();
   }
@@ -64,13 +60,11 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
         backgroundColor: Colors.white,
       ),
       body: _isLoading 
-        // NOTE: Show indicator
         ? Center(
           child: CircularProgressIndicator(
             valueColor: AlwaysStoppedAnimation<Color>(Colors.green[300]),
           )
-        )
-        // NOTE: Show article list
+        ) 
         : ListView.builder(
           itemCount: _ariticles.length,
           itemBuilder: (context, index) => ArticleItem(

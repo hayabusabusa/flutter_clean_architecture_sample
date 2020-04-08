@@ -5,7 +5,7 @@ import 'package:flutter/material.dart';
 abstract class ArticlesUseCaseOutput {
   void useCaseDidUpdateArticles(List<QiitaItem> articles);
   void useCaseIsLoading(bool isLoading);
-  void useCaseDidRecieveError(Error error);
+  void useCaseDidRecieveError(Exception error);
 }
 
 // NOTE: 下位の Presenter に公開するインターフェース

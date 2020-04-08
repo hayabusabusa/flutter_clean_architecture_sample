@@ -49,7 +49,7 @@ class ArticleListPresenter implements ArticleListPresenterInput, ArticlesUseCase
   }
 
   @override
-  void useCaseDidRecieveError(Error error) {
-    // TODO: Show error
+  void useCaseDidRecieveError(Exception error) {
+    _output.recieveError(error.toString());
   }
 }
