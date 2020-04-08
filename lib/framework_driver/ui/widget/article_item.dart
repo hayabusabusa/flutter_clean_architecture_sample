@@ -60,8 +60,8 @@ class ArticleItem extends StatelessWidget {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 12.0, vertical: 8.0),
       child: RippleCard(
-        onTap: () {_onTap(_qiitaItem);},
         height: 140,
+        onTap: () {_onTap(_qiitaItem);},
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
