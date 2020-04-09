@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:io';
 import 'package:http/http.dart' as http;
 
 import 'package:clean_architecture_sample/secret.dart';
@@ -7,7 +8,7 @@ import 'package:clean_architecture_sample/secret.dart';
 import 'package:clean_architecture_sample/entity/entity.dart';
 
 abstract class APIClientInterface {
-  Future<List<QiitaItem>> fetchItems();
+  Future<QiitaAllItems> fetchAllItems(int page);
 }
 
 class APIClient implements APIClientInterface {
@@ -17,17 +18,19 @@ class APIClient implements APIClientInterface {
   final http.Client httpClient = http.Client();
 
   @override
-  Future<List<QiitaItem>> fetchItems() async {
-    final url = baseURL + '/items';
+  Future<QiitaAllItems> fetchAllItems(int page) async {
+    final url = baseURL + '/items' + '?page=$page';
     final headers = {
-      "Content-Type": "application/json",
-      "Authorization": accessToken,
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: accessToken,
     };
     final response = await httpClient.get(url, headers: headers);
+    final totalCount = response.headers['Total-Count'] as int;
 
     if (response.statusCode == 200) {
       final List<dynamic> array = json.decode(response.body);
-      return array.map((i) => QiitaItem.fromJson(i)).toList();
+      final List<QiitaItem> items = array.map((i) => QiitaItem.fromJson(i)).toList();
+      return QiitaAllItems(items: items, totalCount: totalCount);
     } else {
       throw Exception('Failed to GET /items. (code=${response.statusCode})');
     }
