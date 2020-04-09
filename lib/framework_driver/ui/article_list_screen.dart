@@ -37,6 +37,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
   void initState() {
     super.initState();
     // NOTE: Listen scroll event.
+    // PrimaryScrollController を有効にしたい場合: https://qiita.com/heavenosk/items/30e9769fcfde5f0fc096
     _scrollController.addListener(_scrollListener);
     // NOTE: on update articles.
     widget.updateArticles = (articles) {
