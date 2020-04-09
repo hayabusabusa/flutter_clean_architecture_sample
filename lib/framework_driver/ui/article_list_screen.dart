@@ -71,6 +71,27 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
     }
   }
 
+  Widget _buildBody() {
+    return _isLoading 
+      // Indicator
+      ? Center(
+        child: CircularProgressIndicator(
+          valueColor: AlwaysStoppedAnimation<Color>(Colors.green[300]),
+        )
+      ) 
+      // ListView
+      : Scrollbar(
+          child: ListView.builder(
+            controller: _scrollController,
+            itemCount: _ariticles.length,
+            itemBuilder: (context, index) => ArticleItem(
+              _ariticles[index],
+              (item) { widget._presenter.onTapListItem(item); }
+            ),
+          ),
+      );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -79,20 +100,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
         brightness: Brightness.light,
         backgroundColor: Colors.white,
       ),
-      body: _isLoading 
-        ? Center(
-          child: CircularProgressIndicator(
-            valueColor: AlwaysStoppedAnimation<Color>(Colors.green[300]),
-          )
-        ) 
-        : ListView.builder(
-          controller: _scrollController,
-          itemCount: _ariticles.length,
-          itemBuilder: (context, index) => ArticleItem(
-            _ariticles[index],
-           (item) { widget._presenter.onTapListItem(item); }
-          ),
-        ),
+      body: _buildBody(),
     );
   }
 }
