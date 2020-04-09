@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'package:clean_architecture_sample/router.dart';
 // NOTE: 本当は Interface Adapter の Model とか
 import 'package:clean_architecture_sample/entity/entity.dart';
 import 'package:clean_architecture_sample/framework_driver/ui/widget/widgets.dart';
@@ -99,6 +100,15 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
         title: Text('Qiita', style: TextStyle(color: Colors.green, fontSize: 20, fontWeight: FontWeight.w600),),
         brightness: Brightness.light,
         backgroundColor: Colors.white,
+        iconTheme: IconThemeData(color: Colors.green),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.search), 
+            onPressed: () {
+              Navigator.of(context).pushNamed(RouteName.search);
+            }
+          )
+        ],
       ),
       body: _buildBody(),
     );

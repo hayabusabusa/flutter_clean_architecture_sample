@@ -32,4 +32,10 @@ class AppBuilder {
 
     return view;
   }
+
+  SearchScreen createSearchScreen() {
+    // View
+    final view = SearchScreen();
+    return view;
+  }
 }
