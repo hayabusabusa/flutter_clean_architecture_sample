@@ -6,11 +6,13 @@ import 'package:clean_architecture_sample/framework_driver/ui/widget/widgets.dar
 import 'package:clean_architecture_sample/interface_adapter/interface_adapter.dart';
 
 class ArticleListScreen extends StatefulWidget implements ArticleListPresenterOutput {
-  ArticleListPresenterInput _presenter;
+  final ArticleListPresenterInput _presenter;
 
-  void inject(ArticleListPresenterInput presenter) {
-    _presenter = presenter;
-  }
+  ArticleListScreen({
+    Key key,
+    ArticleListPresenterInput presenter,
+  }): this._presenter = presenter, 
+      super(key: key);
 
   @override
   State<StatefulWidget> createState() => _ArticleListScreenState();

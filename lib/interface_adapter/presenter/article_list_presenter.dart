@@ -18,13 +18,13 @@ abstract class ArticleListPresenterInput {
 // NOTE: DIP より、上位レイヤーの抽象( UseCase の Output のインターフェース )をここで実装する
 class ArticleListPresenter implements ArticleListPresenterInput, ArticlesUseCaseOutput {
   final ArticlesUseCaseInput _useCase;
-  final ArticleListPresenterOutput _output;
+
+  // NOTE: View を後から指定する( 下層への依存をなくすため )
+  ArticleListPresenterOutput output;
 
   ArticleListPresenter(
-    this._output,
     this._useCase,
-  ): assert(_output != null,
-            _useCase != null); 
+  ): assert(_useCase != null); 
 
   @override
   void onInitState() {
@@ -45,16 +45,16 @@ class ArticleListPresenter implements ArticleListPresenterInput, ArticlesUseCase
 
   @override
   void useCaseDidUpdateArticles(List<QiitaItem> articles) {
-    _output.updateArticles(articles);
+    output?.updateArticles(articles);
   }
 
   @override
   void useCaseIsLoading(bool isLoading) {
-    _output.updateIsLoading(isLoading);
+    output?.updateIsLoading(isLoading);
   }
 
   @override
   void useCaseDidRecieveError(Exception error) {
-    _output.recieveError(error.toString());
+    output?.recieveError(error.toString());
   }
 }

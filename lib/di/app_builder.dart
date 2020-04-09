@@ -11,20 +11,24 @@ class AppBuilder {
   ): assert(_apiClient != null);
 
   ArticleListScreen createArticleListScreen() {
-    final view = ArticleListScreen();
+    // Repositories
     final articlesRepository = ArticlesRepository(_apiClient);
     final urlLaunchRepository = URLLaunchRepository();
+    // UseCase
     final useCase = ArticlesUseCase(
       articlesRepository: articlesRepository,
       urlLaunchRepository: urlLaunchRepository
     );
-    final presenter = ArticleListPresenter(view, useCase);
+    // Presenter
+    final presenter = ArticleListPresenter(useCase);
+    // View
+    final view = ArticleListScreen(presenter: presenter,);
 
     // NOTE: UseCase の Output に Presenter を指定
     useCase.output = presenter;
 
-    // NOTE: View の Output に Presenter を指定
-    view.inject(presenter);
+    // NOTE: Presenter の Output に View を指定
+    presenter.output = view;
 
     return view;
   }
