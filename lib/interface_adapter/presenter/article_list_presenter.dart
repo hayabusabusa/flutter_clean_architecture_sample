@@ -38,7 +38,7 @@ class ArticleListPresenter implements ArticleListPresenterInput, ArticlesUseCase
 
   @override
   void onReachBottom() {
-    print('Fetch next articles');
+    _useCase.fetchNextPageArticles();
   }
 
   // MARK: UseCaes Output

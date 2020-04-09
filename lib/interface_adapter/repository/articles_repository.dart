@@ -12,7 +12,7 @@ class ArticlesRepository implements ArticlesRepositoryInterface {
   ): assert(_apiClient != null);
 
   @override
-  Future<List<QiitaItem>> fetchArticles() async {
-    return _apiClient.fetchItems();
+  Future<QiitaAllItems> fetchArticles(int page) async {
+    return _apiClient.fetchAllItems(page);
   }
 }
