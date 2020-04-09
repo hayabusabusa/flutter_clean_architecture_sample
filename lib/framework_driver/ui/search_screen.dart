@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'package:clean_architecture_sample/framework_driver/ui/widget/widgets.dart';
+
 class SearchScreen extends StatefulWidget {
   @override
   State<StatefulWidget> createState() => _SearchScreenState();
@@ -10,7 +12,7 @@ class _SearchScreenState extends State<SearchScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: TextField(),
+        title: RoundedTextField(hintText: 'キーワードを入力',),
         brightness: Brightness.light,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.green),
