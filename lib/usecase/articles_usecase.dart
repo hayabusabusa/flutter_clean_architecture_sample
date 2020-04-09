@@ -1,5 +1,6 @@
+import 'package:flutter/foundation.dart';
+
 import 'package:clean_architecture_sample/entity/entity.dart';
-import 'package:flutter/material.dart';
 
 // NOTE: 下位の Presenter に実装させるインターフェース
 abstract class ArticlesUseCaseOutput {

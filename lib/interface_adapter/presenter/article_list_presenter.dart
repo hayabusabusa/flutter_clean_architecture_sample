@@ -1,4 +1,3 @@
-// NOTE: TEST
 import 'package:clean_architecture_sample/entity/entity.dart';
 import 'package:clean_architecture_sample/usecase/usecase.dart';
 

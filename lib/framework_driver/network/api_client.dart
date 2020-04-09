@@ -3,6 +3,7 @@ import 'package:http/http.dart' as http;
 
 import 'package:clean_architecture_sample/secret.dart';
 // NOTE: Framework and Driver から Entity への依存は順方向
+// 層を跨いだ依存は厳密にはダメなので、厳しくするならレスポンスを直で流したりするといいかもしれない.
 import 'package:clean_architecture_sample/entity/entity.dart';
 
 abstract class APIClientInterface {
