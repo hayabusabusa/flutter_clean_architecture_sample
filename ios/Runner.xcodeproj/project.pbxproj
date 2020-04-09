@@ -70,7 +70,6 @@
 				20E39431F0C93DC335ACC902 /* Pods-Runner.release.xcconfig */,
 				5AE40C656EA2D83F49DA7CC3 /* Pods-Runner.profile.xcconfig */,
 			);
-			name = Pods;
 			path = Pods;
 			sourceTree = "<group>";
 		};
@@ -531,7 +530,7 @@
 					"-framework",
 					Flutter,
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.example.cleanArchitectureSample;
+				PRODUCT_BUNDLE_IDENTIFIER = com.shunya.yamada.cleanArchitectureSample;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "Runner/Runner-Bridging-Header.h";

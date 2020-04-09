@@ -17,7 +17,7 @@ class _SearchScreenState extends State<SearchScreen> {
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.green),
         leading: IconButton(
-          icon: Icon(Icons.close), 
+          icon: Icon(Icons.arrow_back_ios), 
           onPressed: () {
             Navigator.of(context).pop();
           }
