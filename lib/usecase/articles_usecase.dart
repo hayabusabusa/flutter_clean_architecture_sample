@@ -1,6 +1,7 @@
 import 'package:flutter/foundation.dart';
 
 import 'package:clean_architecture_sample/entity/entity.dart';
+import 'package:clean_architecture_sample/usecase/usecase.dart';
 
 // NOTE: 下位の Presenter に実装させるインターフェース
 abstract class ArticlesUseCaseOutput {
@@ -14,16 +15,6 @@ abstract class ArticlesUseCaseInput {
   void fetchArticles();
   void fetchNextPageArticles();
   void openURL(String url);
-}
-
-// NOTE: 下位の Repository( Gateway ) に実装させるインターフェース.
-abstract class ArticlesRepositoryInterface {
-  Future<QiitaAllItems> fetchArticles(int page);
-}
-
-// NOTE: 下位の Repository( Gateway ) に実装させるインターフェース.
-abstract class URLLaunchRepositoryInterface {
-  Future<void> launchInWebView(String url);
 }
 
 class ArticlesUseCase implements ArticlesUseCaseInput {
