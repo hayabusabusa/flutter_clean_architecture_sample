@@ -13,6 +13,7 @@ abstract class ArticleListPresenterOutput {
 abstract class ArticleListPresenterInput {
   void onInitState();
   void onTapListItem(QiitaItem item);
+  void onReachBottom();
 }
 
 // NOTE: DIP より、上位レイヤーの抽象( UseCase の Output のインターフェース )をここで実装する
@@ -34,6 +35,11 @@ class ArticleListPresenter implements ArticleListPresenterInput, ArticlesUseCase
   @override
   void onTapListItem(QiitaItem item) {
     _useCase.openURL(item.url);
+  }
+
+  @override
+  void onReachBottom() {
+    print('Fetch next articles');
   }
 
   // MARK: UseCaes Output

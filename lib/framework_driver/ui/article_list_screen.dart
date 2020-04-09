@@ -26,12 +26,16 @@ class ArticleListScreen extends StatefulWidget implements ArticleListPresenterOu
 }
 
 class _ArticleListScreenState extends State<ArticleListScreen> {
+  final ScrollController _scrollController = ScrollController();
+
   List<QiitaItem> _ariticles = [];
   bool _isLoading = true;
 
   @override
   void initState() {
     super.initState();
+    // NOTE: Listen scroll event.
+    _scrollController.addListener(_scrollListener);
     // NOTE: on update articles.
     widget.updateArticles = (articles) {
       setState(() {
@@ -52,6 +56,19 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
   }
 
   @override
+  void dispose() {
+    _scrollController.dispose();
+    super.dispose();
+  }
+
+  void _scrollListener() {
+    double position = _scrollController.offset / _scrollController.position.maxScrollExtent;
+    if (position >= 1) {
+      widget._presenter.onReachBottom();
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
@@ -66,6 +83,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
           )
         ) 
         : ListView.builder(
+          controller: _scrollController,
           itemCount: _ariticles.length,
           itemBuilder: (context, index) => ArticleItem(
             _ariticles[index],
