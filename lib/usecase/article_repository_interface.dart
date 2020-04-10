@@ -6,4 +6,5 @@ import 'package:clean_architecture_sample/entity/entity.dart';
 // NOTE: 下位の Repository( Gateway ) に実装させるインターフェース.
 abstract class ArticlesRepositoryInterface {
   Future<QiitaAllItems> fetchArticles(int page);
+  Future<QiitaAllItems> searchArticles(String keyword, int page);
 }

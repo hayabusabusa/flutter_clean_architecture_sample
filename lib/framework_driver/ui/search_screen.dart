@@ -1,38 +1,36 @@
+import 'package:clean_architecture_sample/entity/qiita_item.dart';
 import 'package:flutter/material.dart';
 
-import 'package:clean_architecture_sample/router.dart';
-// NOTE: 本当は Interface Adapter の Model とか
-import 'package:clean_architecture_sample/entity/entity.dart';
 import 'package:clean_architecture_sample/framework_driver/ui/widget/widgets.dart';
-import 'package:clean_architecture_sample/interface_adapter/interface_adapter.dart';
+import 'package:clean_architecture_sample/interface_adapter/presenter/presenter.dart';
 
-class ArticleListScreen extends StatefulWidget implements ArticleListPresenterOutput {
-  final ArticleListPresenterInput _presenter;
+class SearchScreen extends StatefulWidget implements SearchPresenterOutput {
+  final SearchPresenterInput _presenter;
 
-  ArticleListScreen({
+  SearchScreen({
     Key key,
-    ArticleListPresenterInput presenter,
-  }): this._presenter = presenter, 
+    SearchPresenterInput presenter,
+  }): this._presenter = presenter,
       super(key: key);
 
   @override
-  State<StatefulWidget> createState() => _ArticleListScreenState();
+  State<StatefulWidget> createState() => _SearchScreenState();
+
+  @override
+  Function(String) recieveError;
 
   @override
   Function(List<QiitaItem>) updateArticles;
 
   @override
   Function(bool) updateIsLoading;
-
-  @override
-  Function(String) recieveError;
 }
 
-class _ArticleListScreenState extends State<ArticleListScreen> {
+class _SearchScreenState extends State<SearchScreen> {
   final ScrollController _scrollController = ScrollController();
 
   List<QiitaItem> _ariticles = [];
-  bool _isLoading = true;
+  bool _isLoading = false;
 
   @override
   void initState() {
@@ -56,7 +54,6 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
     widget.recieveError = (errorMessage) {
       print(errorMessage);
     };
-    widget._presenter.onInitState();
   }
 
   @override
@@ -68,7 +65,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
   void _scrollListener() {
     double position = _scrollController.offset / _scrollController.position.maxScrollExtent;
     if (position >= 1) {
-      widget._presenter.onReachBottom();
+      widget._presenter?.onReachBottom();
     }
   }
 
@@ -87,7 +84,7 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
             itemCount: _ariticles.length,
             itemBuilder: (context, index) => ArticleItem(
               _ariticles[index],
-              (item) { widget._presenter.onTapListItem(item); }
+              (item) { widget._presenter?.onTapListItem(item); }
             ),
           ),
       );
@@ -97,18 +94,21 @@ class _ArticleListScreenState extends State<ArticleListScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Qiita', style: TextStyle(color: Colors.green, fontSize: 20, fontWeight: FontWeight.w600),),
+        title: RoundedTextField(
+          hintText: 'キーワードを入力',
+          onSubmited: (text) {
+            widget._presenter.onTextEditingComplete(text); 
+          },
+        ),
         brightness: Brightness.light,
         backgroundColor: Colors.white,
         iconTheme: IconThemeData(color: Colors.green),
-        actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.search), 
-            onPressed: () {
-              Navigator.of(context).pushNamed(RouteName.search);
-            }
-          )
-        ],
+        leading: IconButton(
+          icon: Icon(Icons.arrow_back_ios), 
+          onPressed: () {
+            Navigator.of(context).pop();
+          }
+        ),
       ),
       body: _buildBody(),
     );

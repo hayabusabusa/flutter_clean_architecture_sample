@@ -1,7 +1,10 @@
 import 'package:flutter/material.dart';
 
-import 'package:clean_architecture_sample/framework_driver/network/network.dart';
+import 'package:clean_architecture_sample/router.dart';
 import 'package:clean_architecture_sample/di/app_builder.dart';
+import 'package:clean_architecture_sample/framework_driver/network/network.dart';
+import 'package:clean_architecture_sample/framework_driver/ui/widget/widgets.dart';
+
 
 void main() {
   final apiClient = APIClient();
@@ -21,7 +24,17 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'CASample',
-      home: _builder.createArticleListScreen(),
+      initialRoute: RouteName.articleList,
+      onGenerateRoute: (settings) {
+        switch (settings.name) {
+          case RouteName.articleList:
+            return FadeRoute(page: _builder.createArticleListScreen());
+          case RouteName.search:
+            return MaterialPageRoute(builder: (context) => _builder.createSearchScreen());
+          default:
+            return null;
+        }
+      },
     );
   }
 }
