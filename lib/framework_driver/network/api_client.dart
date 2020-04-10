@@ -6,11 +6,7 @@ import 'package:clean_architecture_sample/secret.dart';
 // NOTE: Framework and Driver から Entity への依存は順方向
 // 層を跨いだ依存は厳密にはダメなので、厳しくするならレスポンスを直で流したりするといいかもしれない.
 import 'package:clean_architecture_sample/entity/entity.dart';
-
-abstract class APIClientInterface {
-  Future<QiitaAllItems> fetchAllItems(int page);
-  Future<QiitaAllItems> searchAllItems(String keyword, int page);
-}
+import 'package:clean_architecture_sample/interface_adapter/repository/repository.dart';
 
 class APIClient implements APIClientInterface {
   static const String baseURL = 'https://qiita.com/api/v2';
