@@ -9,6 +9,7 @@ import 'package:clean_architecture_sample/entity/entity.dart';
 
 abstract class APIClientInterface {
   Future<QiitaAllItems> fetchAllItems(int page);
+  Future<QiitaAllItems> searchAllItems(String keyword, int page);
 }
 
 class APIClient implements APIClientInterface {
@@ -20,6 +21,25 @@ class APIClient implements APIClientInterface {
   @override
   Future<QiitaAllItems> fetchAllItems(int page) async {
     final url = baseURL + '/items' + '?page=$page';
+    final headers = {
+      HttpHeaders.contentTypeHeader: "application/json",
+      HttpHeaders.authorizationHeader: accessToken,
+    };
+    final response = await httpClient.get(url, headers: headers);
+    final totalCount = response.headers['Total-Count'] as int;
+
+    if (response.statusCode == 200) {
+      final List<dynamic> array = json.decode(response.body);
+      final List<QiitaItem> items = array.map((i) => QiitaItem.fromJson(i)).toList();
+      return QiitaAllItems(items: items, totalCount: totalCount);
+    } else {
+      throw Exception('Failed to GET /items. (code=${response.statusCode})');
+    }
+  }
+
+  @override
+  Future<QiitaAllItems> searchAllItems(String keyword, int page) async {
+    final url = baseURL + '/items' + '?page=$page' + '&query=$keyword';
     final headers = {
       HttpHeaders.contentTypeHeader: "application/json",
       HttpHeaders.authorizationHeader: accessToken,
