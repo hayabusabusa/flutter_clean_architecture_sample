@@ -25,6 +25,8 @@ class SearchUseCase implements SearchUseCaseInput {
   List<QiitaItem> _fetchedArticles = [];
   /// 取得完了したページのインデックス. ( 初期値は 1 )
   int _currentPage = 1;
+  /// 検索したキーワード
+  String _currentKeyword = '';
   /// 次のページを取得中かどうか. ( ScrollController のイベントは複数回走るため )
   bool _isLoadingNexPage = false;
 
@@ -44,6 +46,7 @@ class SearchUseCase implements SearchUseCaseInput {
     _articlesRepository.searchArticles(keyword, _currentPage)
       .then((value) {
         _fetchedArticles = value.items;
+        _currentKeyword = keyword;
         output?.useCaseDidUpdateArticles(_fetchedArticles);
         output?.useCaseIsLoading(false);
       })
@@ -62,7 +65,7 @@ class SearchUseCase implements SearchUseCaseInput {
     _isLoadingNexPage = true;
     _currentPage += 1;
 
-    _articlesRepository.fetchArticles(_currentPage)
+    _articlesRepository.searchArticles(_currentKeyword, _currentPage)
       .then((value) {
         _isLoadingNexPage = false;
         _fetchedArticles.addAll(value.items);
