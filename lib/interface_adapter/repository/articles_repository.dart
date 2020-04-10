@@ -15,4 +15,9 @@ class ArticlesRepository implements ArticlesRepositoryInterface {
   Future<QiitaAllItems> fetchArticles(int page) async {
     return _apiClient.fetchAllItems(page);
   }
+
+  @override
+  Future<QiitaAllItems> searchArticles(String keyword, int page) {
+    return _apiClient.searchAllItems(keyword, page);
+  }
 }
