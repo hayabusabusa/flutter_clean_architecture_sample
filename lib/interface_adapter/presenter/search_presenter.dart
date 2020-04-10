@@ -3,7 +3,7 @@ import 'package:clean_architecture_sample/usecase/usecase.dart';
 
 /// `View` 側に公開する `SearchPresenter` のInputインターフェース
 abstract class SearchPresenterInput {
-  void onTextEditedAndExit(String text);
+  void onTextEditingComplete(String text);
   void onTapListItem(QiitaItem item);
   void onReachBottom();
 }
@@ -26,7 +26,7 @@ class SearchPresenter implements SearchPresenterInput, SearchUseCaseOutput {
      this._useCase = useCase;
 
   @override
-  void onTextEditedAndExit(String text) {
+  void onTextEditingComplete(String text) {
     _useCase.fetchArticles(text);
   }
 

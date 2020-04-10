@@ -1,12 +1,19 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 
 class RoundedTextField extends StatelessWidget {
   final TextEditingController controller;
   final String hintText;
 
+  final VoidCallback onEditingComplete;
+  final ValueChanged<String> onSubmited;
+
   RoundedTextField({
     this.controller,
     this.hintText,
+    this.onEditingComplete,
+    this.onSubmited,
   });
 
   @override
@@ -30,6 +37,8 @@ class RoundedTextField extends StatelessWidget {
           Expanded(
             child: TextField(
               controller: controller,
+              onEditingComplete: onEditingComplete,
+              onSubmitted: onSubmited,
               textAlignVertical: TextAlignVertical.center,
               cursorColor: Colors.green,
               decoration: InputDecoration(

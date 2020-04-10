@@ -34,8 +34,22 @@ class AppBuilder {
   }
 
   SearchScreen createSearchScreen() {
+    // Repositories
+    final articlesRepository = ArticlesRepository(_apiClient);
+    final urlLaunchRepository = URLLaunchRepository();
+    // UseCase
+    final useCase = SearchUseCase(
+      articlesRepository: articlesRepository, 
+      urlLaunchRepository: urlLaunchRepository,
+    );
+    // Presenter
+    final presenter = SearchPresenter(useCase);
     // View
-    final view = SearchScreen();
+    final view = SearchScreen(presenter: presenter,);
+
+    useCase.output = presenter;
+    presenter.output = view;
+
     return view;
   }
 }
