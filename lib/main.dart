@@ -30,7 +30,7 @@ class App extends StatelessWidget {
           case RouteName.articleList:
             return FadeRoute(page: _builder.createArticleListScreen());
           case RouteName.search:
-            return FadeRoute(page: _builder.createSearchScreen());
+            return MaterialPageRoute(builder: (context) => _builder.createSearchScreen());
           default:
             return null;
         }

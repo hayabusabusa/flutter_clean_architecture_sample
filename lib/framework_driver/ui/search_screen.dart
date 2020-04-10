@@ -28,7 +28,6 @@ class SearchScreen extends StatefulWidget implements SearchPresenterOutput {
 
 class _SearchScreenState extends State<SearchScreen> {
   final ScrollController _scrollController = ScrollController();
-  final TextEditingController _editingController = TextEditingController();
 
   List<QiitaItem> _ariticles = [];
   bool _isLoading = false;
@@ -39,8 +38,6 @@ class _SearchScreenState extends State<SearchScreen> {
     // NOTE: Listen scroll event.
     // PrimaryScrollController を有効にしたい場合: https://qiita.com/heavenosk/items/30e9769fcfde5f0fc096
     _scrollController.addListener(_scrollListener);
-    // NOTE: Listen text editing event
-
     // NOTE: on update articles.
     widget.updateArticles = (articles) {
       setState(() {
@@ -62,7 +59,6 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void dispose() {
     _scrollController.dispose();
-    _editingController.dispose();
     super.dispose();
   }
 
@@ -71,10 +67,6 @@ class _SearchScreenState extends State<SearchScreen> {
     if (position >= 1) {
       widget._presenter?.onReachBottom();
     }
-  }
-
-  void _onEditingComplete() {
-    widget._presenter.onTextEditingComplete(_editingController.text);
   }
 
   Widget _buildBody() {
